@@ -20,7 +20,6 @@ public class Lab4 extends AppCompatActivity {
     ProgressBar loading;
     TextView text;
     private int progressStatus = 0;
-    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
