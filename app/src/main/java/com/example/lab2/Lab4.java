@@ -20,6 +20,7 @@ public class Lab4 extends AppCompatActivity {
     ProgressBar loading;
     TextView text;
     private int progressStatus = 0;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class Lab4 extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.cancel();
-                startDownload();
+                st();
                 dialogInterface.cancel();
             }
         });
@@ -66,25 +67,27 @@ public class Lab4 extends AppCompatActivity {
     }
 
 
-    private void startDownload() {
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
+    private void st(){
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                progressStatus++;
+                while (progressStatus < 100) {
+                    progressStatus += 1;
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            text.setText(String.valueOf(progressStatus));
+                        }
+                    });
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        text.setText(String.valueOf(progressStatus));
+                    try {
+                        // Sleep for 200 milliseconds.
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                });
-
-                if (progressStatus == 100){
-                    timer.cancel();
                 }
             }
-        };
-        timer.schedule(timerTask, 0, 100);
+        }).start();
     }
 }
