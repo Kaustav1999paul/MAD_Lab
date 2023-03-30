@@ -61,8 +61,7 @@ public class Lab4 extends AppCompatActivity {
             }
         });
 
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+        builder.create().show();
     }
 
 
